@@ -67,8 +67,8 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 
 
-<h1>عشان ترفع البروجيكت ع جيت هب 
-git init 
+<h1>عشان ترفع البروجيكت ع جيت هب </h1>
+<h3>git init 
 git branch -m main 
 git add . 
 git commit -m "اكتب الversion"
@@ -83,4 +83,4 @@ git push origin feature/اسم الfeature
 git checkout main 
 git merge feature/اسم الfeature 
 git push
-</h1>
+</h3>
