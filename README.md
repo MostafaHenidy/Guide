@@ -64,3 +64,23 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+<h1>عشان ترفع البروجيكت ع جيت هب 
+git init 
+git branch -m main 
+git add . 
+git commit -m "اكتب الversion"
+git push -u origin main
+عشان ترفع كل جزئيه بتعملها للبروجيكت 
+git checkout -b feature/اسم الfeature     ده عشان تعمل البرانش
+git checkout feature/اسم الfeature                     اسم البرانش اللى انت عملتها
+git add . 
+git commit -m "اكتب الversion"
+git push origin feature/اسم الfeature
+عشان تعمل merge بين البرانشين
+git checkout main 
+git merge feature/اسم الfeature 
+git push
+</h1>
