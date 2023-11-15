@@ -29,7 +29,8 @@
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                     <a class="nav-link" href="/features">Features</a>
-                    <a class="nav-link" href="/about">About</a>
+                    <a class="nav-link" href="/about">About Us</a>
+                    <a class="nav-link" href="/posts">Important Places</a>
                     <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                 </div>
             </div>
