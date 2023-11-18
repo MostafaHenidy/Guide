@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,11 +13,12 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    
+
     <!-- Scripts -->
     @viteReactRefresh
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg bg-primary px-4 ">
         <div class="container-fluid">
@@ -30,16 +32,29 @@
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                     <a class="nav-link" href="/features">Features</a>
                     <a class="nav-link" href="/about">About Us</a>
-                    <a class="nav-link" href="/posts">Important Places</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Services
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/posts">Medical service</a></li>
+                            <li><a class="dropdown-item" href="/edu">Educational service</a></li>
+                            <li><a class="dropdown-item" href="/job">Jobs service</a></li>
+                            <li><a class="dropdown-item" href="cafe">Cafe service</a></li>
+                        </ul>
+                    </li>
                     <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                 </div>
             </div>
         </div>
     </nav>
 
-        <main class="p-4 container-md">
-            @yield('content')
-        </main>
+    <main class="p-4 container-md">
+        @include('inc.message')
+        @yield('content')
+    </main>
     </div>
 </body>
+
 </html>

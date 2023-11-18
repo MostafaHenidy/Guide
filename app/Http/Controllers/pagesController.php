@@ -19,7 +19,7 @@ class pagesController extends Controller
 
     public function about()
     {
-        $title = "Welome to About";
+        $title = "About US";
         return view('pages.about')->with('title', $title);
     }
 
@@ -27,7 +27,7 @@ class pagesController extends Controller
     {
         $data = array(
             'title' => 'Features',
-            'features' => ['Create Post' ,'Upload Media']
+            'features' => ['Available jobs' ,'Education assosiations','Health care services','Cafe and restorants']
         );
         return view('pages.features')->with($data);
     }

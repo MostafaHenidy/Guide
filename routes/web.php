@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\PostsControlller;
+use App\Http\Controllers\PostsController;
+use App\Http\Controllers\EductaionController;
+use App\Http\Controllers\CafeController;
+use App\Http\Controllers\jobsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +28,7 @@ Route::get('/', [App\Http\Controllers\pagesController::class, 'index']);
 
 Route::get('/about', [App\Http\Controllers\pagesController::class, 'about']);
 Route::get('/features', [App\Http\Controllers\pagesController::class, 'features']);
-Route::resource('posts', PostsControlller::class);
+Route::resource('posts', PostsController::class);
+Route::resource('edu', EductaionController::class);
+Route::resource('job', jobsController::class);
+Route::resource('cafe', CafeController::class);
