@@ -14,8 +14,9 @@ class EductaionController extends Controller
      */
     public function index()
     {
-        $edus = education::paginate(5);
-        return view("education.index")->with("edus", $edus);
+        $educations = Education::all();
+        // return view("education.index")->with("edus", $edus);
+        return response()->json(['data' => $educations]);
     }
 
     /**
@@ -23,9 +24,12 @@ class EductaionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view("education.create");
+        // return view("education.create");
+        $education = Education::create($request->all());
+
+        return response()->json(['data' => $education], 201);
     }
 
     /**
@@ -36,30 +40,31 @@ class EductaionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'address' => 'required',
-            'info' => 'required',
-            'body' => 'required',
-            'cover_image' => 'image|nullable|max:1999'
-        ]);
-        $fileNameToStore = null;
-        if ($request->hasFile('cover_image')) {
-            $file = $request->file('cover_image');
-            $fileName = $file->getClientOriginalName();
-            $fileNameToStore = time() . '_' . $fileName;
-            $file->move('covers', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'placeholder.jpg';
-        }
-        $edu = new education();
-        $edu->title = $request->title;
-        $edu->address = $request->address;
-        $edu->info = $request->info;
-        $edu->body = $request->body;
-        $edu->cover_image = $fileNameToStore;
-        $edu->save();
-        return redirect('/edu')->with('success', 'Location created successfully');
+        // $this->validate($request, [
+        //     'title' => 'required',
+        //     'address' => 'required',
+        //     'info' => 'required',
+        //     'body' => 'required',
+        //     'cover_image' => 'image|nullable|max:1999'
+        // ]);
+        // $fileNameToStore = null;
+        // if ($request->hasFile('cover_image')) {
+        //     $file = $request->file('cover_image');
+        //     $fileName = $file->getClientOriginalName();
+        //     $fileNameToStore = time() . '_' . $fileName;
+        //     $file->move('covers', $fileNameToStore);
+        // } else {
+        //     $fileNameToStore = 'placeholder.jpg';
+        // }
+        // $edu = new education();
+        // $edu->title = $request->title;
+        // $edu->address = $request->address;
+        // $edu->info = $request->info;
+        // $edu->body = $request->body;
+        // $edu->cover_image = $fileNameToStore;
+        // $edu->user_id = auth()->user()->id;
+        // $edu->save();
+        // return redirect('/edu')->with('success', 'Location created successfully');
     }
 
     /**
@@ -70,8 +75,8 @@ class EductaionController extends Controller
      */
     public function show($id)
     {
-        $edu = education::findOrfail($id);
-        return view("education.show")->with("edu", $edu);
+        $education = Education::findOrFail($id);
+        return response()->json(['data' => $education]);
     }
 
     /**
@@ -95,13 +100,17 @@ class EductaionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $edu = education::findOrfail($id);
-        $edu->title = $request->title;
-        $edu->address = $request->address;
-        $edu->info = $request->info;
-        $edu->body = $request->body;
-        $edu->save();
-        return redirect('/edu')->with('success', 'Location updated successfully');
+        $education = Education::findOrFail($id);
+        $education->update($request->all());
+
+        return response()->json(['data' => $education]);
+        // $edu = education::findOrfail($id);
+        // $edu->title = $request->title;
+        // $edu->address = $request->address;
+        // $edu->info = $request->info;
+        // $edu->body = $request->body;
+        // $edu->save();
+        // return redirect('/edu')->with('success', 'Location updated successfully');
     }
 
     /**
@@ -112,8 +121,12 @@ class EductaionController extends Controller
      */
     public function destroy($id)
     {
-        $edu = education::findOrfail($id);
-        $edu->delete();
-        return redirect('/edu')->with('deleted', 'Location deleted successfully');
+        $education = Education::findOrFail($id);
+        $education->delete();
+
+        return response()->json(null, 204);
+        // $edu = education::findOrfail($id);
+        // $edu->delete();
+        // return redirect('/edu')->with('deleted', 'Location deleted successfully');
     }
 }

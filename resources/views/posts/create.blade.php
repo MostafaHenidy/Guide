@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <h1 class="fw-bold fs-4 py-3">Add Location</h1>
+    <h1 class="fw-bold fs-4 py-3">Add Hospital or Clinic</h1>
     {!! Form::open(['route' => 'posts.store', 'method' => 'post', 'files' => true]) !!}
     @csrf
     <div class="form-group">

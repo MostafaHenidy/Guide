@@ -16,7 +16,8 @@ class cafeController extends Controller
     public function index()
     {
         $cafes = cafe::paginate(5);
-        return view("cafes.index")->with("cafes", $cafes);
+        // return view("cafes.index")->with("cafes", $cafes);
+        return response()->json(['data' => $cafes]);
     }
 
     /**
@@ -26,7 +27,8 @@ class cafeController extends Controller
      */
     public function create()
     {
-        return view("cafes.create");
+        // return view("cafes.create");
+        return response()->json(['message' => 'Location created successfully']);
     }
 
     /**
@@ -37,30 +39,31 @@ class cafeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'address' => 'required',
-            'info' => 'required',
-            'body' => 'required',
-            'cover_image' => 'image|nullable|max:1999'
-        ]);
-        $fileNameToStore = null;
-        if ($request->hasFile('cover_image')) {
-            $file = $request->file('cover_image');
-            $fileName = $file->getClientOriginalName();
-            $fileNameToStore = time() . '_' . $fileName;
-            $file->move('covers', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'placeholder.jpg';
-        }
-        $cafes = new cafe;
-        $cafes->title = $request->title;
-        $cafes->address = $request->address;
-        $cafes->info = $request->info;
-        $cafes->body = $request->body;
-        $cafes->cover_image = $fileNameToStore;
-        $cafes->save();
-        return redirect('/cafe')->with('success', 'Location created successfully');
+        // $this->validate($request, [
+        //     'title' => 'required',
+        //     'address' => 'required',
+        //     'info' => 'required',
+        //     'body' => 'required',
+        //     'cover_image' => 'image|nullable|max:1999'
+        // ]);
+        // $fileNameToStore = null;
+        // if ($request->hasFile('cover_image')) {
+        //     $file = $request->file('cover_image');
+        //     $fileName = $file->getClientOriginalName();
+        //     $fileNameToStore = time() . '_' . $fileName;
+        //     $file->move('covers', $fileNameToStore);
+        // } else {
+        //     $fileNameToStore = 'placeholder.jpg';
+        // }
+        // $cafes = new cafe;
+        // $cafes->title = $request->title;
+        // $cafes->address = $request->address;
+        // $cafes->info = $request->info;
+        // $cafes->body = $request->body;
+        // $cafes->cover_image = $fileNameToStore;
+        // $cafes->user_id = auth()->user()->id;
+        // $cafes->save();
+        // return redirect('/cafe')->with('success', 'Location created successfully');
     }
 
     /**
@@ -72,7 +75,8 @@ class cafeController extends Controller
     public function show($id)
     {
         $cafes = cafe::findOrfail($id);
-        return view("cafes.show")->with("cafes", $cafes);
+        // return view("cafes.show")->with("cafes", $cafes);
+        return response()->json(['data' => $cafes]);
     }
 
     /**
@@ -81,11 +85,11 @@ class cafeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $cafes = cafe::findOrfail($id);
-        return view('cafes.edit')->with('cafes', $cafes);
-    }
+    // public function edit($id)
+    // {
+    //     $cafes = cafe::findOrfail($id);
+    //     return view('cafes.edit')->with('cafes', $cafes);
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -96,13 +100,18 @@ class cafeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cafes = cafe::findOrfail($id);
-        $cafes->title = $request->title;
-        $cafes->address = $request->address;
-        $cafes->info = $request->info;
-        $cafes->body = $request->body;
-        $cafes->save();
-        return redirect('/cafe')->with('success', 'Location updated successfully');
+        $cafes = cafe::findOrFail($id);
+        $cafes->update($request->all());
+
+        return response()->json(['data' => $cafes]);
+        // $cafes = cafe::findOrfail($id);
+        // $cafes->title = $request->title;
+        // $cafes->address = $request->address;
+        // $cafes->info = $request->info;
+        // $cafes->body = $request->body;
+        // $cafes->save();
+        // // return redirect('/cafe')->with('success', 'Location updated successfully');
+        // return response()->json(['message' => 'Location updated successfully']);
     }
 
     /**
@@ -115,6 +124,7 @@ class cafeController extends Controller
     {
         $cafes = cafe::findOrfail($id);
         $cafes->delete();
-        return redirect('/cafe')->with('deleted', 'Location deleted successfully');
+        // return redirect('/cafe')->with('deleted', 'Location deleted successfully');
+        return response()->json(null, 204);
     }
 }

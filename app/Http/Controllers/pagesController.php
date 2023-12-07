@@ -14,13 +14,15 @@ class pagesController extends Controller
     public function index()
     {
         $title = "Welome to Home";
-        return view('pages.index')->with('title', $title);
+        // return view('pages.index')->with('title', $title);
+        return response()->json($title);
     }
 
     public function about()
     {
         $title = "About US";
-        return view('pages.about')->with('title', $title);
+        // return view('pages.about')->with('title', $title);
+        return response()->json(['title' => $title]);
     }
 
     public function features()
@@ -29,6 +31,7 @@ class pagesController extends Controller
             'title' => 'Features',
             'features' => ['Available jobs' ,'Education assosiations','Health care services','Cafe and restorants']
         );
-        return view('pages.features')->with($data);
+        // return view('pages.features')->with($data);
+        return response()->json($data);
     }
 }

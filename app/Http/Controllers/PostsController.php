@@ -14,8 +14,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(5);
-        return view("posts.index")->with("posts", $posts);
+        $posts = Post::all();
+        // return view("posts.index")->with("posts", $posts);
+        return response()->json(['data' => $posts]);
     }
 
     /**
@@ -23,9 +24,12 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view("posts.create");
+        // return view("posts.create");
+        $post = Post::create($request->all());
+
+        return response()->json(['data' => $post], 201);
     }
 
     /**
@@ -58,6 +62,7 @@ class PostsController extends Controller
         $post->info = $request->info;
         $post->body = $request->body;
         $post->cover_image = $fileNameToStore;
+        $post->user_id = auth()->user()->id;
         $post->save();
         return redirect('/posts')->with('success', 'Location created successfully');
     }
@@ -70,8 +75,10 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = Post::findOrfail($id);
-        return view("posts.show")->with("post", $post);
+        $post = Post::findOrFail($id);
+        return response()->json(['data' => $post]);
+        // $post = Post::findOrfail($id);
+        // return view("posts.show")->with("post", $post);
     }
 
     /**
@@ -95,13 +102,17 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $post = Post::findOrfail($id);
-        $post->title = $request->title;
-        $post->address = $request->address;
-        $post->info = $request->info;
-        $post->body = $request->body;
-        $post->save();
-        return redirect('/posts')->with('success', 'Location updated successfully');
+        $post = Post::findOrFail($id);
+        $post->update($request->all());
+
+        return response()->json(['data' => $post]);
+        // $post = Post::findOrfail($id);
+        // $post->title = $request->title;
+        // $post->address = $request->address;
+        // $post->info = $request->info;
+        // $post->body = $request->body;
+        // $post->save();
+        // return redirect('/posts')->with('success', 'Location updated successfully');
     }
 
     /**
@@ -112,8 +123,13 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::findOrfail($id);
+        $post = Post::findOrFail($id);
         $post->delete();
-        return redirect('/posts')->with('deleted', 'Location deleted successfully');
+
+        return response()->json(null, 204);
+
+        // $post = Post::findOrfail($id);
+        // $post->delete();
+        // return redirect('/posts')->with('deleted', 'Location deleted successfully');
     }
 }

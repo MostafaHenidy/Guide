@@ -15,8 +15,10 @@ class jobsController extends Controller
      */
     public function index()
     {
-        $jobs = jobs::paginate(5);
-        return view("jobs.index")->with("jobs", $jobs);
+        // $jobs = jobs::paginate(5);
+        // return view("jobs.index")->with("jobs", $jobs);
+        $jobs = jobs::all();
+        return response()->json(['data' => $jobs]);
     }
 
     /**
@@ -24,9 +26,12 @@ class jobsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view("jobs.create");
+        // return view("jobs.create");
+        $job = jobs::create($request->all());
+
+        return response()->json(['data' => $job], 201);
     }
 
     /**
@@ -37,30 +42,31 @@ class jobsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'address' => 'required',
-            'info' => 'required',
-            'body' => 'required',
-            'cover_image' => 'image|nullable|max:1999'
-        ]);
-        $fileNameToStore = null;
-        if ($request->hasFile('cover_image')) {
-            $file = $request->file('cover_image');
-            $fileName = $file->getClientOriginalName();
-            $fileNameToStore = time() . '_' . $fileName;
-            $file->move('covers', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'placeholder.jpg';
-        }
-        $jobs = new jobs;
-        $jobs->title = $request->title;
-        $jobs->address = $request->address;
-        $jobs->info = $request->info;
-        $jobs->body = $request->body;
-        $jobs->cover_image = $fileNameToStore;
-        $jobs->save();
-        return redirect('/job')->with('success', 'Location created successfully');
+        // $this->validate($request, [
+        //     'title' => 'required',
+        //     'address' => 'required',
+        //     'info' => 'required',
+        //     'body' => 'required',
+        //     'cover_image' => 'image|nullable|max:1999'
+        // ]);
+        // $fileNameToStore = null;
+        // if ($request->hasFile('cover_image')) {
+        //     $file = $request->file('cover_image');
+        //     $fileName = $file->getClientOriginalName();
+        //     $fileNameToStore = time() . '_' . $fileName;
+        //     $file->move('covers', $fileNameToStore);
+        // } else {
+        //     $fileNameToStore = 'placeholder.jpg';
+        // }
+        // $jobs = new jobs;
+        // $jobs->title = $request->title;
+        // $jobs->address = $request->address;
+        // $jobs->info = $request->info;
+        // $jobs->body = $request->body;
+        // $jobs->cover_image = $fileNameToStore;
+        // $jobs->user_id = auth()->user()->id;
+        // $jobs->save();
+        // return redirect('/job')->with('success', 'Location created successfully');
     }
 
     /**
@@ -72,7 +78,7 @@ class jobsController extends Controller
     public function show($id)
     {
         $jobs = jobs::findOrfail($id);
-        return view("jobs.show")->with("jobs", $jobs);
+        return response()->json(['data' => $jobs]);
     }
 
     /**
@@ -83,8 +89,8 @@ class jobsController extends Controller
      */
     public function edit($id)
     {
-        $jobs = jobs::findOrfail($id);
-        return view('jobs.edit')->with('jobs', $jobs);
+        // $jobs = jobs::findOrfail($id);
+        // return view('jobs.edit')->with('jobs', $jobs);
     }
 
     /**
@@ -96,13 +102,17 @@ class jobsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $jobs = jobs::findOrfail($id);
-        $jobs->title = $request->title;
-        $jobs->address = $request->address;
-        $jobs->info = $request->info;
-        $jobs->body = $request->body;
-        $jobs->save();
-        return redirect('/jobs')->with('success', 'Location updated successfully');
+        $job = jobs::findOrFail($id);
+        $job->update($request->all());
+
+        return response()->json(['data' => $job]);
+        // $jobs = jobs::findOrfail($id);
+        // $jobs->title = $request->title;
+        // $jobs->address = $request->address;
+        // $jobs->info = $request->info;
+        // $jobs->body = $request->body;
+        // $jobs->save();
+        // return redirect('/jobs')->with('success', 'Location updated successfully');
     }
 
     /**
@@ -113,8 +123,12 @@ class jobsController extends Controller
      */
     public function destroy($id)
     {
-        $jobs = jobs::findOrfail($id);
-        $jobs->delete();
-        return redirect('/jobs')->with('deleted', 'Location deleted successfully');
+        $job = jobs::findOrFail($id);
+        $job->delete();
+
+        return response()->json(null, 204);
+        // $jobs = jobs::findOrfail($id);
+        // $jobs->delete();
+        // return redirect('/jobs')->with('deleted', 'Location deleted successfully');
     }
 }

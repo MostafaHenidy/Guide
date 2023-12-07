@@ -55,7 +55,6 @@
                                     <li><a class="dropdown-item" href="cafe">Cafe service</a></li>
                                 </ul>
                             </li>
-                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                         </div>
                     </div>
 
@@ -82,6 +81,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a href="/home"class="dropdown-item">Dashboard</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
